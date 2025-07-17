@@ -3,7 +3,7 @@
 1. **Clone this repository:**
 
    ```
-   git clone https://github.com/zhenhao23/HomeSync.git
+   git clone https://github.com/zhenhao23/pineapple-donkey.git
    ```
 
 2. **Navigate to the project folder:**
