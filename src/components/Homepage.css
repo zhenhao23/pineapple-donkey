@@ -126,12 +126,13 @@
 }
 
 .slide-indicators {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0 0 0;
+  position: static;
+  transform: none;
 }
 
 .indicator {
@@ -139,13 +140,14 @@
   height: 8px;
   border-radius: 50%;
   border: none;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #bbb; /* grey for inactive */
   cursor: pointer;
   transition: all 0.2s;
+  padding: 0;
 }
 
 .indicator.active {
-  background-color: white;
+  background-color: #222; /* black for active */
   transform: scale(1.2);
 }
 
@@ -157,8 +159,30 @@
 .section-title {
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 0px;
   color: #333;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.see-more-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.2s;
+}
+
+.see-more-btn:hover {
+  color: #222;
 }
 
 .brands-container {
@@ -178,45 +202,52 @@
 .brand-card {
   background: white;
   border-radius: 12px;
-  padding: 16px 12px;
-  text-align: center;
+  padding: 12px 8px 12px 8px;
+  text-align: left;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
-  min-width: 120px;
+  min-width: 180px;
+  max-width: 220px;
+  width: 90vw;
   cursor: pointer;
-}
-
-.brand-card:hover {
-  transform: translateY(-2px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .brand-logo {
-  margin-bottom: 8px;
+  margin-bottom: 0;
+  width: 100%;
 }
 
 .brand-logo img {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  object-fit: cover;
+  width: 100%;
+  height: 70px;
+  border-radius: 12px;
+  object-fit: contain;
+  background: #fff;
+  display: block;
 }
 
 .brand-info {
-  text-align: center;
+  text-align: left;
+  padding: 0 4px;
 }
 
 .brand-name {
-  font-size: 14px;
-  font-weight: 600;
-  margin: 0 0 4px 0;
+  font-size: 13px;
+  font-weight: 400;
+  margin: 0 0 2px 0;
   color: #333;
+  text-align: left;
 }
 
 .brand-cashback {
-  font-size: 12px;
-  color: #28a745;
+  font-size: 14px;
+  color: #111;
   margin: 0;
   font-weight: 500;
+  text-align: left;
 }
 
 /* Mobile optimizations */
@@ -234,13 +265,15 @@
   }
 
   .brands-grid {
-    grid-template-columns: repeat(8, 120px);
-    width: auto;
-    padding-right: 60px; /* Show half of the next cards */
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    width: 100%;
+    padding-right: 0;
   }
-
   .brand-card {
-    min-width: 120px;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
   }
 }
 

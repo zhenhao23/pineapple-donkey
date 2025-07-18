@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Homepage.css";
 
 // Brand logos
@@ -36,6 +37,10 @@ interface SocialProject {
 
 const Homepage: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const navigate = useNavigate();
 
   // Social projects slideshow data
   const socialProjects: SocialProject[] = [
@@ -64,7 +69,7 @@ const Homepage: React.FC = () => {
   // Brands data
   const brands: Brand[] = [
     { id: 1, name: "Shopee", logo: shopeeLogo, cashback: "Up to 8% cashback" },
-    { id: 2, name: "lenovo", logo: lenovoLogo, cashback: "Up to 5% cashback" },
+    { id: 2, name: "Lenovo", logo: lenovoLogo, cashback: "Up to 5% cashback" },
     {
       id: 3,
       name: "lululemon",
@@ -72,33 +77,33 @@ const Homepage: React.FC = () => {
       cashback: "Up to 6% cashback",
     },
     { id: 4, name: "Nike", logo: nikeLogo, cashback: "Up to 4% cashback" },
-    { id: 5, name: "taobao", logo: taobaoLogo, cashback: "Up to 7% cashback" },
+    { id: 5, name: "Taobao", logo: taobaoLogo, cashback: "Up to 7% cashback" },
     {
       id: 6,
-      name: "traveloka",
+      name: "Traveloka",
       logo: travelokaLogo,
       cashback: "Up to 3% cashback",
     },
     {
       id: 7,
-      name: "samsung",
+      name: "Samsung",
       logo: samsungLogo,
       cashback: "Up to 5% cashback",
     },
     { id: 8, name: "Lazada", logo: lazadaLogo, cashback: "Up to 9% cashback" },
     {
       id: 9,
-      name: "temu.com",
+      name: "Temu",
       logo: temuLogo,
       cashback: "Up to 4% cashback",
     },
     {
       id: 10,
-      name: "trip",
+      name: "Trip",
       logo: tripLogo,
       cashback: "Up to 6% cashback",
     },
-    { id: 11, name: "agoda", logo: agodaLogo, cashback: "Up to 5% cashback" },
+    { id: 11, name: "Agoda", logo: agodaLogo, cashback: "Up to 5% cashback" },
     {
       id: 12,
       name: "H&M",
@@ -106,6 +111,32 @@ const Homepage: React.FC = () => {
       cashback: "Up to 4% cashback",
     },
   ];
+
+  // Swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current !== null && touchEndX.current !== null) {
+      const distance = touchStartX.current - touchEndX.current;
+      if (distance > 40) {
+        // Swipe left
+        setCurrentSlide((prev) =>
+          prev === socialProjects.length - 1 ? prev : prev + 1
+        );
+      } else if (distance < -40) {
+        // Swipe right
+        setCurrentSlide((prev) => (prev === 0 ? prev : prev - 1));
+      }
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
 
   // Auto-advance slideshow every 5 seconds
   useEffect(() => {
@@ -145,7 +176,14 @@ const Homepage: React.FC = () => {
 
       {/* Social Projects Slideshow */}
       <div className="slideshow-container">
-        <div className="slideshow-wrapper">
+        <div
+          className="slideshow-wrapper"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onClick={() => navigate("/program")}
+          style={{ cursor: "pointer" }}
+        >
           <div
             className="slides-container"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -164,21 +202,24 @@ const Homepage: React.FC = () => {
             ))}
           </div>
         </div>
-        {/* Slide indicators */}
-        <div className="slide-indicators">
-          {socialProjects.map((_, index) => (
-            <button
-              key={index}
-              className={`indicator ${currentSlide === index ? "active" : ""}`}
-              onClick={() => goToSlide(index)}
-            />
-          ))}
-        </div>
+      </div>
+      {/* Slide indicators BELOW slideshow */}
+      <div className="slide-indicators">
+        {socialProjects.map((_, index) => (
+          <button
+            key={index}
+            className={`indicator ${currentSlide === index ? "active" : ""}`}
+            onClick={() => goToSlide(index)}
+          />
+        ))}
       </div>
 
       {/* Brands Section */}
       <div className="brands-section">
-        <h2 className="section-title">Popular Brands</h2>
+        <div className="section-title-row">
+          <h2 className="section-title">Popular Brands</h2>
+          <button className="see-more-btn">See more</button>
+        </div>
         <div className="brands-container">
           <div className="brands-grid">
             {brands.map((brand) => (
