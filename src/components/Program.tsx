@@ -8,7 +8,6 @@ import wwfConservationImg from "../assets/social-projects/wwf-turtle.jpg";
 import povertyAidImg from "../assets/social-projects/poverty-aid.png";
 import malaysiaFlag from "../assets/flags/malaysia_flag.png";
 
-
 const photoUrls = [
   {
     name: "WWF Conservation",
@@ -54,19 +53,34 @@ const photoUrls = [
 
 const Program: React.FC = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const navigate = useNavigate(); // ⬅️ Added navigate hook
+  const navigate = useNavigate();
 
   const handleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
   const handleDonate = (programName: string) => {
-    alert(`Donate to: ${programName}`);
+    if (programName === "Help Save Our Turtles") {
+      navigate("/turtle-timeline");
+    } else {
+      alert(`Donate to: ${programName}`);
+    }
   };
 
   return (
-    <div style={{ padding: "24px" }}>
-      <h1>All Programs</h1>
+    <div style={{ padding: "80px 24px 24px 24px", position: "relative" }}>
+      {/* Back Button (UI refer to timeline) */}
+      <button
+        className="timeline-back-btn"
+        style={{ position: "absolute", top: 24, left: 24, zIndex: 10 }}
+        onClick={() => navigate(-1)}
+        aria-label="Back"
+      >
+        ← Back
+      </button>
+      <h1 style={{ textAlign: "center", marginBottom: "24px" }}>
+        All Programs
+      </h1>
       <div
         style={{
           display: "flex",
@@ -206,7 +220,9 @@ const Program: React.FC = () => {
       </div>
 
       {/* ⬇️ Back to Home Button */}
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}
+      >
         <button
           onClick={() => navigate("/")}
           style={{
