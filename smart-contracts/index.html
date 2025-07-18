@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Social Program & Payment Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body { 
+      font-family: Arial, sans-serif; 
+      max-width: 600px; 
+      margin: 0 auto; 
+      padding: 20px; 
+      background-color: #f8f9fa;
+      text-align: center;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #007cba;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    p {
+      color: #666;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    .button {
+      display: inline-block;
+      background: #007cba;
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 10px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      min-width: 200px;
+    }
+    .button:hover {
+      background: #005a87;
+    }
+    .button.payment {
+      background: #28a745;
+    }
+    .button.payment:hover {
+      background: #218838;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+      }
+      .container {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      .button {
+        display: block;
+        margin: 10px 0;
+        padding: 16px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🏛️ Social Program & Payment Tracker</h1>
+    <p>Welcome to the blockchain-based social program tracking system. Choose your access point:</p>
+    
+    <a href="/program-tracker.html" class="button">
+      📊 Program Tracker
+    </a>
+    
+    <a href="/payment.html" class="button payment">
+      💳 Payment Tracker
+    </a>
+    
+    <p style="font-size: 14px; color: #888; margin-top: 30px;">
+      Access requires proper URL parameters. Contact your administrator for the correct links.
+    </p>
+  </div>
+</body>
+</html>

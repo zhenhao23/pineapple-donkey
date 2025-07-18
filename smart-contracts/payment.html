@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body { 
+      font-family: Arial, sans-serif; 
+      max-width: 800px; 
+      margin: 0 auto; 
+      padding: 15px; 
+      background-color: #f8f9fa;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .username {
+      font-size: 18px;
+      font-weight: bold;
+      color: #007cba;
+    }
+    .program-org {
+      font-size: 14px;
+      color: #666;
+    }
+    .contact-info {
+      font-size: 13px;
+      color: #888;
+    }
+    .uuid {
+      font-size: 11px;
+      color: #999;
+      font-family: monospace;
+    }
+    form { 
+      background: white; 
+      padding: 20px; 
+      border-radius: 12px; 
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    label { 
+      display: block; 
+      margin: 15px 0 8px; 
+      font-weight: bold; 
+      color: #333;
+    }
+    input[type="text"], input[type="tel"], input[type="number"], textarea { 
+      width: 100%; 
+      padding: 12px; 
+      margin-bottom: 15px; 
+      border: 2px solid #e9ecef; 
+      border-radius: 8px;
+      font-size: 16px; /* Prevents zoom on iOS */
+      transition: border-color 0.3s ease;
+      font-family: inherit;
+      resize: vertical;
+    }
+    input[type="text"]:focus, input[type="tel"]:focus, input[type="number"]:focus, textarea:focus {
+      outline: none;
+      border-color: #007cba;
+    }
+    input[readonly] {
+      background-color: #f8f9fa;
+      color: #6c757d;
+    }
+    button { 
+      background: #28a745; 
+      color: white; 
+      padding: 14px 24px; 
+      border: none; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-size: 16px; 
+      width: 100%;
+      margin-bottom: 10px;
+      transition: background-color 0.3s ease;
+      touch-action: manipulation; /* Improves touch responsiveness */
+    }
+    button:hover, button:active { 
+      background: #218838; 
+    }
+    button:disabled { 
+      background: #6c757d; 
+      cursor: not-allowed; 
+    }
+    .result { 
+      background: #d1f2eb; 
+      border: 2px solid #28a745; 
+      padding: 15px; 
+      border-radius: 12px; 
+      margin-top: 20px;
+      word-break: break-word;
+    }
+    .error { 
+      background: #ffe6e6; 
+      border: 2px solid #dc3545; 
+      padding: 15px; 
+      border-radius: 12px; 
+      margin-top: 20px;
+      word-break: break-word;
+    }
+    .link { 
+      color: #007cba; 
+      text-decoration: none; 
+      font-weight: bold; 
+    }
+    .link:hover { 
+      text-decoration: underline; 
+    }
+    .hidden { 
+      display: none; 
+    }
+    .loading { 
+      opacity: 0.6; 
+      pointer-events: none; 
+    }
+    .amount-display {
+      font-size: 18px;
+      font-weight: bold;
+      color: #28a745;
+      text-align: center;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin: 15px 0;
+      border: 2px solid #e9ecef;
+    }
+
+    /* Mobile-specific styles */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 15px;
+      }
+      
+      .header h1 {
+        font-size: 20px;
+        margin: 0;
+      }
+      
+      .username {
+        font-size: 16px;
+      }
+      
+      .program-org {
+        font-size: 13px;
+      }
+      
+      .contact-info {
+        font-size: 12px;
+      }
+      
+      .uuid {
+        font-size: 10px;
+      }
+      
+      form {
+        padding: 15px;
+      }
+      
+      h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+      }
+      
+      label {
+        font-size: 14px;
+        margin: 12px 0 6px;
+      }
+      
+      input[type="text"], input[type="tel"], input[type="number"], textarea {
+        padding: 14px; /* Larger touch targets */
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+      
+      textarea {
+        min-height: 80px;
+      }
+      
+      button {
+        padding: 16px 24px;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+      
+      .amount-display {
+        font-size: 16px;
+        padding: 10px;
+        margin: 12px 0;
+      }
+      
+      .result, .error {
+        padding: 12px;
+        margin-top: 15px;
+      }
+      
+      .result h3, .error h3 {
+        font-size: 16px;
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 18px;
+      }
+      
+      .username {
+        font-size: 15px;
+      }
+      
+      .program-org {
+        font-size: 12px;
+      }
+      
+      .contact-info {
+        font-size: 11px;
+      }
+      
+      form {
+        padding: 12px;
+      }
+      
+      h2 {
+        font-size: 16px;
+      }
+      
+      label {
+        font-size: 13px;
+      }
+      
+      input[type="text"], input[type="tel"], input[type="number"], textarea {
+        padding: 12px;
+        font-size: 16px;
+      }
+      
+      .amount-display {
+        font-size: 15px;
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>💳 Payment Tracker</h1>
+    <div class="user-info">
+      <div class="username" id="userName">Loading...</div>
+      <div class="program-org" id="programOrg">Loading...</div>
+      <!-- <div class="contact-info"> -->
+        <!-- <span id="mobileInfo">Loading...</span> |  -->
+        <!-- <span id="tinInfo">Loading...</span> -->
+      <!-- </div> -->
+      <!-- <div class="uuid" id="uuid">Loading...</div> -->
+    </div>
+  </div>
+
+  <h2>Submit Payment</h2>
+  <form id="paymentForm">
+    <label>Username: <input type="text" name="username" id="usernameInput" required readonly /></label>
+    <label>Program & Organization: <input type="text" name="programOrganization" id="programOrgInput" required readonly /></label>
+    <label>Mobile: <input type="tel" name="mobile" id="mobileInput" required readonly /></label>
+    <label>TIN: <input type="text" name="tin" id="tinInput" required readonly /></label>
+    <label>Amount (MYR): <input type="number" name="amount" step="0.01" min="0" required /></label>
+    <label>Remarks: <textarea name="remarks" id="remarksInput" rows="3" placeholder="Optional payment remarks or description..."></textarea></label>
+    <div class="amount-display" id="amountDisplay">Enter amount above</div>
+    <button type="submit" id="submitBtn">Submit Payment</button>
+  </form>
+  
+  <div id="result" class="hidden"></div>
+  
+  <script>
+    // Get base URL for API calls
+    const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3001' : '';
+    
+    // Initialize page with URL parameters
+    function initializePage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const username = urlParams.get('username');
+      const program = urlParams.get('Program');
+      const organization = urlParams.get('Organization');
+      const mobile = urlParams.get('mobile');
+      const tin = urlParams.get('tin');
+      const uuid = urlParams.get('uuid');
+      
+      if (!username || !program || !organization || !mobile || !tin || !uuid) {
+        document.body.innerHTML = `
+          <div style="text-align: center; padding: 50px;">
+            <h1>❌ Access Denied</h1>
+            <p>Invalid access parameters. Please use the correct URL format:</p>
+            <p><code>/payment?username=Name&Program=ProgramName&Organization=OrgName&mobile=Phone&tin=TIN&uuid=UUID</code></p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Concatenate Program and Organization
+      const programOrganization = `${program} - ${organization}`;
+      
+      // Update header with user info
+      document.getElementById('userName').textContent = decodeURIComponent(program);
+      document.getElementById('programOrg').textContent = organization;
+    //   document.getElementById('mobileInfo').textContent = `Mobile: ${mobile}`;
+    //   document.getElementById('tinInfo').textContent = `TIN: ${tin}`;
+    //   document.getElementById('uuid').textContent = `UUID: ${uuid}`;
+      
+      // Pre-fill form fields
+      document.getElementById('usernameInput').value = decodeURIComponent(username);
+      document.getElementById('programOrgInput').value = programOrganization;
+      document.getElementById('mobileInput').value = mobile;
+      document.getElementById('tinInput').value = tin;
+    }
+    
+    // Update amount display
+    document.querySelector('input[name="amount"]').addEventListener('input', function(e) {
+      const amount = parseFloat(e.target.value) || 0;
+      const amountDisplay = document.getElementById('amountDisplay');
+      if (amount > 0) {
+        amountDisplay.textContent = `Payment Amount: RM ${amount.toFixed(2)}`;
+        amountDisplay.style.color = '#28a745';
+      } else {
+        amountDisplay.textContent = 'Enter amount above';
+        amountDisplay.style.color = '#6c757d';
+      }
+    });
+    
+    const form = document.getElementById('paymentForm');
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      const formData = new FormData(form);
+      
+      // Disable form during submission
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing Payment...';
+      form.classList.add('loading');
+
+      try {
+        const res = await fetch(`${API_BASE}/submit-payment`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: formData.get('username'),
+            programOrganization: formData.get('programOrganization'),
+            mobile: formData.get('mobile'),
+            tin: formData.get('tin'),
+            amount: formData.get('amount'),
+            remarks: formData.get('remarks') || ''
+          })
+        });
+        
+        let json;
+        const contentType = res.headers.get('content-type');
+        
+        if (contentType && contentType.includes('application/json')) {
+          json = await res.json();
+        } else {
+          const text = await res.text();
+          json = { error: text };
+        }
+        
+        if (res.ok && json.success) {
+          const txHash = json.txHash;
+          showPaymentResult(txHash, formData.get('amount'), formData.get('username'), formData.get('programOrganization'), formData.get('mobile'), formData.get('tin'), formData.get('remarks') || 'No remarks provided');
+        } else {
+          showError('Payment Error: ' + (json.error || json.message || 'Unknown error occurred'));
+          console.error('Full error details:', json);
+        }
+      } catch (error) {
+        showError('Network error: ' + error.message);
+        console.error('Network error:', error);
+      } finally {
+        // Re-enable form
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Payment';
+        form.classList.remove('loading');
+      }
+    };
+
+    // Function to show payment result
+    function showPaymentResult(txHash, amount, username, programOrg, mobile, tin, remarks) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.className = 'result';
+      resultDiv.innerHTML = `
+        <h3>✅ Payment Submitted Successfully!</h3>
+        <p><strong>Amount:</strong> RM ${parseFloat(amount).toFixed(2)}</p>
+        <p><strong>Transaction Hash:</strong> ${txHash}</p>
+        <p>
+          <a href="/explorer/${txHash}" target="_blank" class="link">🔗 View on Etherscan</a> | 
+          <a href="#" onclick="fetchPaymentDetails('${txHash}')" class="link">📋 View Details</a> |
+          <a href="#" onclick="generatePaymentPDF('${txHash}', '${amount}', '${username}', '${programOrg}', '${mobile}', '${tin}', '${remarks}')" class="link">💾 Save PDF</a>
+        </p>
+        <div id="txDetails"></div>
+      `;
+      resultDiv.classList.remove('hidden');
+      
+      // Scroll to result
+      resultDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Function to show error
+    function showError(message) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.className = 'error';
+      resultDiv.innerHTML = `
+        <h3>❌ Payment Failed</h3>
+        <p>${message}</p>
+      `;
+      resultDiv.classList.remove('hidden');
+      resultDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Function to fetch and display payment details
+    async function fetchPaymentDetails(txHash) {
+      try {
+        const response = await fetch(`${API_BASE}/payment-transaction/${txHash}`);
+        const details = await response.json();
+        
+        const detailsDiv = document.getElementById('txDetails');
+        if (response.ok) {
+          detailsDiv.innerHTML = `
+            <hr>
+            <h4>Transaction Details:</h4>
+            <p><strong>Status:</strong> ${details.status}</p>
+            <p><strong>Block Number:</strong> ${details.blockNumber}</p>
+            <p><strong>From:</strong> ${details.from}</p>
+            <p><strong>Gas Used:</strong> ${details.gasUsed}</p>
+            <p><strong>Timestamp:</strong> ${new Date(details.timestamp).toLocaleString()}</p>
+            ${details.contractCallData ? `
+              <h4>Payment Entry Data:</h4>
+              <p><strong>Username:</strong> ${details.contractCallData.username}</p>
+              <p><strong>Program & Organization:</strong> ${details.contractCallData.programOrganization}</p>
+              <p><strong>Mobile:</strong> ${details.contractCallData.mobile}</p>
+              <p><strong>TIN:</strong> ${details.contractCallData.tin}</p>
+              <p><strong>Amount:</strong> RM ${details.contractCallData.amount}</p>
+            ` : ''}
+          `;
+        } else {
+          detailsDiv.innerHTML = `<p class="error">Failed to fetch details: ${details.error}</p>`;
+        }
+      } catch (error) {
+        document.getElementById('txDetails').innerHTML = `<p class="error">Error: ${error.message}</p>`;
+      }
+    }
+    
+    // Function to generate and download payment receipt PDF
+    function generatePaymentPDF(txHash, amount, username, programOrg, mobile, tin, remarks) {
+      try {
+        // Decode URL-encoded parameters
+        username = decodeURIComponent(username);
+        programOrg = decodeURIComponent(programOrg);
+        remarks = decodeURIComponent(remarks);
+        
+        // Create PDF content
+        const currentDate = new Date().toLocaleString();
+        const pdfContent = `
+PAYMENT RECEIPT
+═══════════════════════════════════════════════════
+
+Payment Details:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Username: ${username}
+Program & Organization: ${programOrg}
+Mobile: ${mobile}
+TIN: ${tin}
+Amount: RM ${parseFloat(amount).toFixed(2)}
+Remarks: ${remarks}
+
+Transaction Information:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Transaction Hash: ${txHash}
+Date & Time: ${currentDate}
+Blockchain: Ethereum Sepolia Testnet
+Etherscan URL: https://sepolia.etherscan.io/tx/${txHash}
+
+═══════════════════════════════════════════════════
+This is a digitally generated receipt for blockchain
+payment submission. Please keep this for your records.
+        `.trim();
+
+        // Create and download the file
+        const blob = new Blob([pdfContent], { type: 'text/plain;charset=utf-8' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        
+        // Generate filename with timestamp
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+        const filename = `payment-receipt-${timestamp}.txt`;
+        
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up URL
+        window.URL.revokeObjectURL(url);
+        
+        // Show success message
+        alert(`Receipt saved as: ${filename}\n\nThe receipt has been downloaded to your device.`);
+        
+      } catch (error) {
+        console.error('Error generating PDF:', error);
+        alert('Error generating receipt: ' + error.message);
+      }
+    }
+    
+    // Initialize page when it loads
+    initializePage();
+  </script>
+</body>
+</html>

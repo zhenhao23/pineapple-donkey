@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Social Program Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body { 
+      font-family: Arial, sans-serif; 
+      max-width: 800px; 
+      margin: 0 auto; 
+      padding: 15px; 
+      background-color: #f8f9fa;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .program-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .program-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #007cba;
+    }
+    .organization-name {
+      font-size: 14px;
+      color: #666;
+    }
+    .uuid {
+      font-size: 11px;
+      color: #999;
+      font-family: monospace;
+    }
+    form { 
+      background: white; 
+      padding: 20px; 
+      border-radius: 12px; 
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    label { 
+      display: block; 
+      margin: 15px 0 8px; 
+      font-weight: bold; 
+      color: #333;
+    }
+    input[type="text"], input[type="file"], input[type="number"] { 
+      width: 100%; 
+      padding: 12px; 
+      margin-bottom: 15px; 
+      border: 2px solid #e9ecef; 
+      border-radius: 8px;
+      font-size: 16px; /* Prevents zoom on iOS */
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus, input[type="file"]:focus, input[type="number"]:focus {
+      outline: none;
+      border-color: #007cba;
+    }
+    button { 
+      background: #007cba; 
+      color: white; 
+      padding: 14px 24px; 
+      border: none; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-size: 16px;
+      width: 100%;
+      margin-bottom: 10px;
+      transition: background-color 0.3s ease;
+      touch-action: manipulation; /* Improves touch responsiveness */
+    }
+    button:hover, button:active { 
+      background: #005a87; 
+    }
+    .result { 
+      background: #d1edff; 
+      border: 2px solid #007cba; 
+      padding: 15px; 
+      border-radius: 12px; 
+      margin-top: 20px;
+      word-break: break-word;
+    }
+    .error { 
+      background: #ffe6e6; 
+      border: 2px solid #dc3545; 
+      padding: 15px; 
+      border-radius: 12px; 
+      margin-top: 20px;
+      word-break: break-word;
+    }
+    .link { 
+      color: #007cba; 
+      text-decoration: none; 
+      font-weight: bold; 
+    }
+    .link:hover { 
+      text-decoration: underline; 
+    }
+    .hidden { 
+      display: none; 
+    }
+
+    /* Mobile-specific styles */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 15px;
+      }
+      
+      .header h1 {
+        font-size: 20px;
+        margin: 0;
+      }
+      
+      .program-name {
+        font-size: 16px;
+      }
+      
+      .organization-name {
+        font-size: 13px;
+      }
+      
+      .uuid {
+        font-size: 10px;
+      }
+      
+      form {
+        padding: 15px;
+      }
+      
+      h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+      }
+      
+      label {
+        font-size: 14px;
+        margin: 12px 0 6px;
+      }
+      
+      input[type="text"], input[type="file"], input[type="number"] {
+        padding: 14px; /* Larger touch targets */
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+      
+      button {
+        padding: 16px 24px;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+      
+      .result, .error {
+        padding: 12px;
+        margin-top: 15px;
+      }
+      
+      .result h3, .error h3 {
+        font-size: 16px;
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 18px;
+      }
+      
+      .program-name {
+        font-size: 15px;
+      }
+      
+      .organization-name {
+        font-size: 12px;
+      }
+      
+      form {
+        padding: 12px;
+      }
+      
+      h2 {
+        font-size: 16px;
+      }
+      
+      label {
+        font-size: 13px;
+      }
+      
+      input[type="text"], input[type="file"], input[type="number"] {
+        padding: 12px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🏛️ Social Program Tracker</h1>
+    <div class="program-info">
+      <div class="program-name" id="programName">Loading...</div>
+      <div class="organization-name" id="organizationName">Loading...</div>
+      <div class="uuid" id="uuid">Loading...</div>
+    </div>
+  </div>
+
+  <h2>Submit Record</h2>
+  <form id="recordForm">
+    <label>Program Name: <input type="text" name="pic" id="programInput" required readonly /></label>
+    <label>Organization: <input type="text" name="organization" id="organizationInput" required readonly /></label>
+    <label>Milestones (comma separated): <input type="text" name="milestones" required /></label>
+    <label>Amount (MYR): <input type="number" name="amount" step="0.01" min="0" required /></label>
+    <label>Evidence File: <input type="file" name="evidence" required /></label>
+    <label>Receipt File: <input type="file" name="receipt" required /></label>
+    <button type="submit">Submit</button>
+  </form>
+  
+  <div id="result" class="hidden"></div>
+  <script>
+    // Get base URL for API calls
+    const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3001' : '';
+    
+    // Initialize page with URL parameters
+    function initializePage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const programName = urlParams.get('Program');
+      const organizationName = urlParams.get('Organization');
+      const uuid = urlParams.get('uuid');
+      
+      if (!programName || !organizationName || !uuid) {
+        document.body.innerHTML = `
+          <div style="text-align: center; padding: 50px;">
+            <h1>❌ Access Denied</h1>
+            <p>Invalid access parameters. Please use the correct URL format.</p>
+            <p><code>/program-tracker?Program=YourProgram&Organization=YourOrganization&uuid=YourUUID</code></p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Update header with program info
+      document.getElementById('programName').textContent = programName;
+      document.getElementById('organizationName').textContent = organizationName;
+      document.getElementById('uuid').textContent = `UUID: ${uuid}`;
+      
+      // Pre-fill form fields
+      document.getElementById('programInput').value = programName;
+      document.getElementById('organizationInput').value = organizationName;
+    }
+    
+    const form = document.getElementById('recordForm');
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const milestones = data.get('milestones').split(',').map(m => m.trim());
+      data.set('milestones', JSON.stringify(milestones));
+
+      try {
+        const res = await fetch(`${API_BASE}/submit`, {
+          method: 'POST',
+          body: data
+        });
+        
+        let json;
+        const contentType = res.headers.get('content-type');
+        
+        if (contentType && contentType.includes('application/json')) {
+          json = await res.json();
+        } else {
+          // Handle non-JSON responses
+          const text = await res.text();
+          json = { error: text };
+        }
+        
+        if (res.ok && json.success) {
+          const txHash = json.txHash;
+          const formData = new FormData(form);
+          
+          // Create and show transaction details
+          showTransactionResult(txHash, formData.get('amount'), formData.get('pic'), formData.get('organization'), formData.get('milestones'));
+        } else {
+          alert('Error: ' + (json.error || json.message || 'Unknown error occurred'));
+          console.error('Full error details:', json);
+        }
+      } catch (error) {
+        alert('Network error: ' + error.message);
+        console.error('Network error:', error);
+      }
+    };
+
+    // Function to show transaction result
+    async function showTransactionResult(txHash, amount, programName, organization, milestones) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.className = 'result';
+      resultDiv.innerHTML = `
+        <h3>✅ Transaction Successful!</h3>
+        <p><strong>Transaction Hash:</strong> ${txHash}</p>
+        <p>
+          <a href="/explorer/${txHash}" target="_blank" class="link">🔗 View on Etherscan</a> | 
+          <a href="#" onclick="fetchTransactionDetails('${txHash}')" class="link">📋 View Details</a> |
+          <a href="#" onclick="generateProgramReceipt('${txHash}', '${amount}', '${programName}', '${organization}', '${milestones}')" class="link">💾 Save Receipt</a>
+        </p>
+        <div id="txDetails"></div>
+      `;
+      resultDiv.classList.remove('hidden');
+    }
+
+    // Function to fetch and display transaction details
+    async function fetchTransactionDetails(txHash) {
+      try {
+        const response = await fetch(`${API_BASE}/transaction/${txHash}`);
+        const details = await response.json();
+        
+        const detailsDiv = document.getElementById('txDetails');
+        if (response.ok) {
+          detailsDiv.innerHTML = `
+            <hr>
+            <h4>Transaction Details:</h4>
+            <p><strong>Status:</strong> ${details.status}</p>
+            <p><strong>Block Number:</strong> ${details.blockNumber}</p>
+            <p><strong>From:</strong> ${details.from}</p>
+            <p><strong>Gas Used:</strong> ${details.gasUsed}</p>
+            <p><strong>Timestamp:</strong> ${new Date(details.timestamp).toLocaleString()}</p>
+            ${details.contractCallData ? `
+              <h4>Program Entry Data:</h4>
+              <p><strong>Program:</strong> ${details.contractCallData.picName}</p>
+              <p><strong>Organization:</strong> ${details.contractCallData.organizationName}</p>
+              <p><strong>Milestone:</strong> ${details.contractCallData.milestone}</p>
+              <p><strong>Amount:</strong> ${details.contractCallData.amount} MYR</p>
+              <p><strong>Evidence IPFS:</strong> <a href="https://gateway.pinata.cloud/ipfs/${details.contractCallData.evidenceIpfsHash.replace('ipfs://', '')}" target="_blank" class="link">${details.contractCallData.evidenceIpfsHash}</a></p>
+              <p><strong>Receipt IPFS:</strong> <a href="https://gateway.pinata.cloud/ipfs/${details.contractCallData.receiptIpfsHash.replace('ipfs://', '')}" target="_blank" class="link">${details.contractCallData.receiptIpfsHash}</a></p>
+            ` : ''}
+          `;
+        } else {
+          detailsDiv.innerHTML = `<p class="error">Failed to fetch details: ${details.error}</p>`;
+        }
+      } catch (error) {
+        document.getElementById('txDetails').innerHTML = `<p class="error">Error: ${error.message}</p>`;
+      }
+    }
+    
+    // Function to generate and download program submission receipt
+    function generateProgramReceipt(txHash, amount, programName, organization, milestones) {
+      try {
+        // Decode URL-encoded parameters
+        programName = decodeURIComponent(programName);
+        organization = decodeURIComponent(organization);
+        milestones = decodeURIComponent(milestones);
+        
+        // Create receipt content
+        const currentDate = new Date().toLocaleString();
+        const receiptContent = `
+PROGRAM SUBMISSION RECEIPT
+═══════════════════════════════════════════════════
+
+Submission Details:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Program Name: ${programName}
+Organization: ${organization}
+Milestones: ${milestones}
+Amount: RM ${parseFloat(amount).toFixed(2)}
+
+Transaction Information:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Transaction Hash: ${txHash}
+Date & Time: ${currentDate}
+Blockchain: Ethereum Sepolia Testnet
+Etherscan URL: https://sepolia.etherscan.io/tx/${txHash}
+
+═══════════════════════════════════════════════════
+This is a digitally generated receipt for blockchain
+program submission. Please keep this for your records.
+        `.trim();
+
+        // Create and download the file
+        const blob = new Blob([receiptContent], { type: 'text/plain;charset=utf-8' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        
+        // Generate filename with timestamp
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+        const filename = `program-receipt-${timestamp}.txt`;
+        
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up URL
+        window.URL.revokeObjectURL(url);
+        
+        // Show success message
+        alert(`Receipt saved as: ${filename}\n\nThe receipt has been downloaded to your device.`);
+        
+      } catch (error) {
+        console.error('Error generating receipt:', error);
+        alert('Error generating receipt: ' + error.message);
+      }
+    }
+    
+    // Initialize page when it loads
+    initializePage();
+  </script>
+</body>
+</html>
