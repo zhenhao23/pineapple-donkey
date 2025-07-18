@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Social project images
 import floodReliefImg from "../assets/social-projects/flood-relief.png";
@@ -52,13 +53,18 @@ const photoUrls = [
 
 const Program: React.FC = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const handleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
   const handleDonate = (programName: string) => {
-    alert(`Donate to: ${programName}`);
+    if (programName === "Help Save Our Turtles") {
+      navigate("/turtle-timeline");
+    } else {
+      alert(`Donate to: ${programName}`);
+    }
   };
 
   return (
@@ -134,7 +140,6 @@ const Program: React.FC = () => {
                   </div> */}
                 </div>
               )}
-
 
               <div
                 style={{
