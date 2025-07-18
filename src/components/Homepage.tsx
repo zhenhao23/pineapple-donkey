@@ -19,8 +19,9 @@ import taobaoLogo from "../assets/brands/taobao.png";
 // Social project images
 import floodReliefImg from "../assets/social-projects/flood-relief.png";
 import educationFundImg from "../assets/social-projects/education-fund.png";
-import wwfConservationImg from "../assets/social-projects/wwf-conservation.png";
+// import wwfConservationImg from "../assets/social-projects/wwf-conservation.png";
 import povertyAidImg from "../assets/social-projects/poverty-aid.png";
+import wwfConservationImg from "../assets/social-projects/wwf-turtle.jpg";
 
 interface Brand {
   id: number;
