@@ -20,6 +20,8 @@ function App() {
           <Route path="/shopee-paid" element={<ShopeePaidPage />} />
           <Route path="/allocate" element={<CashbackAllocatePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/turtle-timeline" element={<TurtleTimelinePage />} />
         </Routes>
       </Router>
     </div>
