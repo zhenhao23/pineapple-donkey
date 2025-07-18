@@ -1,0 +1,85 @@
+.login-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.logo-row {
+  display: flex;
+  flex-direction: row; /* Side by side */
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.logo-divider {
+  display: block;
+  font-size: 2.5rem;
+  color: #bbb;
+  font-weight: 300;
+  margin: 0 8px;
+}
+
+.jata-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-top: 0;
+}
+
+.mydigitalid-img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  margin-top: 0;
+}
+
+.login-header h2 {
+  margin-top: 18px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #08745c;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.mydigitalid-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(90deg, #08745c 80%, #0fa37a 100%);
+  border: none;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-radius: 32px;
+  padding: 16px 36px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(8, 116, 92, 0.1);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  margin-top: 24px;
+}
+
+.mydigitalid-btn:hover {
+  background: #08745c;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(8, 116, 92, 0.18);
+}
+
+.mydigitalid-btn .mydigitalid-img {
+  width: 36px;
+  height: 36px;
+  margin: 0;
+}
