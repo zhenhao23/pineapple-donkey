@@ -68,8 +68,19 @@ const Program: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "24px" }}>
-      <h1>All Programs</h1>
+    <div style={{ padding: "80px 24px 24px 24px", position: "relative" }}>
+      {/* Back Button (UI refer to timeline) */}
+      <button
+        className="timeline-back-btn"
+        style={{ position: "absolute", top: 24, left: 24, zIndex: 10 }}
+        onClick={() => navigate(-1)}
+        aria-label="Back"
+      >
+        ← Back
+      </button>
+      <h1 style={{ textAlign: "center", marginBottom: "24px" }}>
+        All Programs
+      </h1>
       <div
         style={{
           display: "flex",
