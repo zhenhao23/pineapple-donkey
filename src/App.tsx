@@ -13,7 +13,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/program" element={<Program />} />
+          <Route path="/Program" element={<Program />} />
           <Route path="/shopee" element={<ShopeePage />} />
           <Route path="/shopee-paid" element={<ShopeePaidPage />} />
           <Route path="/allocate" element={<CashbackAllocatePage />} />

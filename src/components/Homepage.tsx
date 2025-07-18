@@ -181,7 +181,7 @@ const Homepage: React.FC = () => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          onClick={() => navigate("/program")}
+          onClick={() => navigate("/Program")}
           style={{ cursor: "pointer" }}
         >
           <div
