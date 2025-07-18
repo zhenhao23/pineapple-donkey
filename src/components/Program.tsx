@@ -220,7 +220,7 @@ const Program: React.FC = () => {
       </div>
 
       {/* ⬇️ Back to Home Button */}
-      <div
+      {/* <div
         style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}
       >
         <button
@@ -237,7 +237,7 @@ const Program: React.FC = () => {
         >
           Back to Home
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
