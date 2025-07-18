@@ -47,7 +47,7 @@ const TARGET = 100000;
 const CURRENT = 50000;
 const PROGRESS = (CURRENT / TARGET) * 100;
 
-const TurtleTimelinePage: React.FC = () => {
+const TurtleTimelinePage2: React.FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -60,7 +60,7 @@ const TurtleTimelinePage: React.FC = () => {
         ← Back
       </button>
       <button
-        onClick={() => navigate("/turtle-timeline2")}
+        onClick={() => navigate("/turtle-timeline")}
         style={{
           position: "absolute",
           top: "24px",
@@ -82,7 +82,8 @@ const TurtleTimelinePage: React.FC = () => {
       </button>
       <h1 className="turtle-main-title">WWF Save Sea Turtles</h1>
       <a 
-        href="https://smart-contract-green.vercel.app/payment?username=Don%20Don%20Donkey&Program=Save%20the%20Sea%20Turtles&Organization=World%20Wide%20Fund%20for%20Nature&mobile=60327810500&tin=IG56003500070&uuid=231321323"
+        // href="https://smart-contract-c8g2otjq6-khoo2002s-projects.vercel.app/program-tracker?Program=Save%20the%20Sea%20Turtles&Organization=World%20Wide%20Fund%20for%20Nature&uuid=231321312"
+        href="https://smart-contract-green.vercel.app/program-tracker?Program=Save%20the%20Sea%20Turtles&Organization=World%20Wide%20Fund%20for%20Nature&uuid=231321312"
         target="_blank"
         rel="noopener noreferrer"
         className="turtle-donate-btn"
@@ -91,7 +92,7 @@ const TurtleTimelinePage: React.FC = () => {
           display: "inline-block"
         }}
       >
-        Donate
+        Submit
       </a>
       <div className="turtle-progress-bar-wrap">
         <div className="turtle-progress-bar-bg">
@@ -174,4 +175,4 @@ const TurtleTimelinePage: React.FC = () => {
   );
 };
 
-export default TurtleTimelinePage;
+export default TurtleTimelinePage2;

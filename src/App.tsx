@@ -7,6 +7,7 @@ import CashbackAllocatePage from "./components/CashbackAllocatePage";
 import LoginPage from "./components/LoginPage";
 import UserProfile from "./components/UserProfile";
 import TurtleTimelinePage from "./components/TurtleTimelinePage";
+import TurtleTimelinePage2 from "./components/TurtleTimelinePage2";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/turtle-timeline" element={<TurtleTimelinePage />} />
+          <Route path="/turtle-timeline2" element={<TurtleTimelinePage2 />} />
         </Routes>
       </Router>
     </div>
