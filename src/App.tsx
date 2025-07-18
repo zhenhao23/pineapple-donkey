@@ -5,6 +5,7 @@ import ShopeePage from "./components/ShopeePage";
 import ShopeePaidPage from "./components/ShopeePaidPage";
 import CashbackAllocatePage from "./components/CashbackAllocatePage";
 import LoginPage from "./components/LoginPage";
+import UserProfile from "./components/UserProfile";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/shopee-paid" element={<ShopeePaidPage />} />
           <Route path="/allocate" element={<CashbackAllocatePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/profile" element={<UserProfile />} />
         </Routes>
       </Router>
     </div>

@@ -167,7 +167,7 @@ const Homepage: React.FC = () => {
           </div>
           <div className="header-buttons">
             <button className="language-btn">EN</button>
-            <button className="profile-btn">
+            <button className="profile-btn" onClick={() => navigate("/profile")}>
               <i className="bi bi-person-circle"></i>
             </button>
           </div>
