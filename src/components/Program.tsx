@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Social project images
 import floodReliefImg from "../assets/social-projects/flood-relief.png";
 import educationFundImg from "../assets/social-projects/education-fund.png";
-import wwfConservationImg from "../assets/social-projects/wwf-conservation.png";
+import wwfConservationImg from "../assets/social-projects/wwf-turtle.jpg";
 import povertyAidImg from "../assets/social-projects/poverty-aid.png";
 import malaysiaFlag from "../assets/flags/malaysia_flag.png";
+
 
 const photoUrls = [
   {
@@ -52,6 +54,7 @@ const photoUrls = [
 
 const Program: React.FC = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const navigate = useNavigate(); // ⬅️ Added navigate hook
 
   const handleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -100,7 +103,7 @@ const Program: React.FC = () => {
                   style={{
                     position: "absolute",
                     top: 12,
-                    right: 12, // changed from left to right
+                    right: 12,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -116,25 +119,10 @@ const Program: React.FC = () => {
                       borderRadius: "50%",
                       objectFit: "cover",
                       marginBottom: "4px",
-                      // border: "1px solid white",
                     }}
                   />
-                  {/* <div
-                    style={{
-                      backgroundColor: "rgba(255, 255, 255, 0.8)",
-                      color: "#000",
-                      fontSize: "10px",
-                      fontWeight: 600,
-                      padding: "2px 6px",
-                      borderRadius: "4px",
-                      lineHeight: 1,
-                    }}
-                  >
-                    National Priority
-                  </div> */}
                 </div>
               )}
-
 
               <div
                 style={{
@@ -215,6 +203,24 @@ const Program: React.FC = () => {
             </button>
           );
         })}
+      </div>
+
+      {/* ⬇️ Back to Home Button */}
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}>
+        <button
+          onClick={() => navigate("/")}
+          style={{
+            backgroundColor: "#00b894",
+            color: "white",
+            padding: "10px 20px",
+            borderRadius: "8px",
+            border: "none",
+            cursor: "pointer",
+            fontWeight: 600,
+          }}
+        >
+          Back to Home
+        </button>
       </div>
     </div>
   );
