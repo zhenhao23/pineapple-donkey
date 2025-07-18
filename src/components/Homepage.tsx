@@ -223,7 +223,21 @@ const Homepage: React.FC = () => {
         <div className="brands-container">
           <div className="brands-grid">
             {brands.map((brand) => (
-              <div key={brand.id} className="brand-card">
+              <div
+                key={brand.id}
+                className="brand-card"
+                onClick={() => {
+                  if (brand.name.toLowerCase() === "shopee") {
+                    navigate("/shopee");
+                  }
+                }}
+                style={{
+                  cursor:
+                    brand.name.toLowerCase() === "shopee"
+                      ? "pointer"
+                      : "default",
+                }}
+              >
                 <div className="brand-logo">
                   <img src={brand.logo} alt={brand.name} />
                 </div>
