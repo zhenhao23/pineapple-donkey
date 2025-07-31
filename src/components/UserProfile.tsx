@@ -16,6 +16,7 @@ import evidence5 from "../assets/evidence/evidence_5.jpg";
 import evidence6 from "../assets/evidence/evidence_6.jpg";
 import evidence7 from "../assets/evidence/evidence_7.jpg";
 import evidence8 from "../assets/evidence/evidence_8.jpeg";
+import pinedonkey from "../assets/evidence/logo_pinekey.png";
 
 const UserProfile: React.FC = () => {
   const navigate = useNavigate();
@@ -52,6 +53,33 @@ const UserProfile: React.FC = () => {
       >
         ← Back
       </button>
+
+      {/* Logout Button */}
+      <button 
+        onClick={() => {
+          // Placeholder for logout functionality
+          window.location.href = "/logout-placeholder";
+        }}
+        style={{
+          position: "absolute",
+          top: "24px",
+          right: "24px",
+          background: "#4a7c59",
+          border: "none",
+          fontSize: "14px",
+          cursor: "pointer",
+          color: "#fff",
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "8px 16px",
+          borderRadius: "8px",
+          fontWeight: "600"
+        }}
+      >
+        Log out
+      </button>
+
       {/* Profile Picture */}
       <div style={{
         width: "120px",
@@ -67,19 +95,16 @@ const UserProfile: React.FC = () => {
         border: "4px solid #f0f0f0",
         boxShadow: "0 4px 8px rgba(0,0,0,0.1)"
       }}>
-        {/* Placeholder for profile image - you can replace this with an actual image */}
-        <div style={{
-          width: "100%",
-          height: "100%",
-          backgroundColor: "#a8e6a3",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "48px",
-          color: "#4a7c59"
-        }}>
-          👤
-        </div>
+        {/* Profile image using pinedonkey logo */}
+        <img
+          src={pinedonkey}
+          alt="Profile"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover"
+          }}
+        />
       </div>
 
       {/* User Information */}
@@ -126,57 +151,229 @@ const UserProfile: React.FC = () => {
           </div>
         </div>
 
-        {/* Progress Bar */}
+        {/* Verification Status Box */}
         <div style={{
-          width: "100%",
-          maxWidth: "260px",
-          margin: "24px auto 0 auto"
+          marginBottom: "24px",
+          padding: "20px",
+          backgroundColor: "#f8fcf9",
+          borderRadius: "16px",
+          border: "2px solid #d4f4dd",
+          textAlign: "center",
+          boxShadow: "0 4px 12px rgba(74, 124, 89, 0.08)",
+          position: "relative",
+          overflow: "hidden"
         }}>
+          {/* Background Pattern */}
           <div style={{
-            width: "100%",
-            height: "18px",
-            background: "linear-gradient(90deg, #c3e6c3 60%, #e8f5e8 100%)",
-            borderRadius: "12px",
-            overflow: "hidden",
-            position: "relative"
-          }}>
-            <div style={{
-              height: "100%",
-              background: "linear-gradient(90deg, #4a7c59 60%, #6b9b75 100%)",
-              borderRadius: "12px 0 0 12px",
-              width: "25%",
-              transition: "width 0.5s"
-            }} />
-          </div>
+            position: "absolute",
+            top: "-10px",
+            right: "-10px",
+            width: "60px",
+            height: "60px",
+            background: "linear-gradient(45deg, #e8f5e8, #d4f4dd)",
+            borderRadius: "50%",
+            opacity: "0.5"
+          }} />
+          
+          {/* Header with Icon */}
           <div style={{
             display: "flex",
+            alignItems: "center",
             justifyContent: "center",
-            marginTop: "6px",
-            fontSize: "16px",
-            fontWeight: "600",
+            gap: "8px",
+            marginBottom: "12px"
+          }}>
+            {/* Shield Icon */}
+            <div style={{
+              width: "24px",
+              height: "24px",
+              background: "#4a7c59",
+              borderRadius: "4px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#fff",
+              fontSize: "12px",
+              fontWeight: "bold"
+            }}>
+              ✓
+            </div>
+            <span style={{
+              fontSize: "16px",
+              fontWeight: "700",
+              color: "#4a7c59"
+            }}>
+              MyDigital ID
+            </span>
+          </div>
+
+          {/* Verification Badge */}
+          <div style={{
+            width: "50px",
+            height: "50px",
+            background: "linear-gradient(135deg, #4a7c59, #6b9b75)",
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "0 auto 12px auto",
+            boxShadow: "0 4px 8px rgba(74, 124, 89, 0.2)"
+          }}>
+            <div style={{
+              color: "#fff",
+              fontSize: "20px",
+              fontWeight: "bold"
+            }}>
+              🛡️
+            </div>
+          </div>
+
+          {/* Digital ID Number */}
+          <div style={{
+            backgroundColor: "#e8f5e8",
+            borderRadius: "8px",
+            padding: "8px 12px",
+            marginBottom: "12px",
+            border: "1px solid #c3e6c3"
+          }}>
+            {/* <div style={{
+              fontSize: "11px",
+              color: "#4a7c59",
+              fontWeight: "600",
+              marginBottom: "2px"
+            }}>
+              Digital ID
+            </div> */}
+            <div style={{
+              fontSize: "14px",
+              fontWeight: "700",
+              color: "#2d5233",
+              letterSpacing: "0.5px"
+            }}>
+              MD-890123456789
+            </div>
+          </div>
+
+          <p style={{
+            fontSize: "13px",
+            color: "#6b9b75",
+            margin: "0 0 16px 0",
+            lineHeight: "1.4"
+          }}>
+            Your identity has been verified through secure Malaysia government authentication
+          </p>
+
+          {/* Status Indicators */}
+          <div style={{
+            display: "flex",
+            justifyContent: "space-around",
+            gap: "8px",
+            fontSize: "11px",
             color: "#4a7c59",
-            gap: "0",
-            position: "relative"
+            fontWeight: "600"
           }}>
             <span style={{
-              color: "#4a7c59",
-              position: "absolute",
-              left: "50%",
-              transform: "translateX(-50%)",
-              background: "#fff",
-              padding: "0 8px",
-              borderRadius: "8px",
-              zIndex: "2"
+              display: "flex",
+              alignItems: "center",
+              gap: "4px"
             }}>
-              RM500
+              <div style={{
+                width: "6px",
+                height: "6px",
+                background: "#4a7c59",
+                borderRadius: "50%"
+              }} />
+              Secure
             </span>
             <span style={{
-              color: "#6b9b75",
-              position: "absolute",
-              right: "-16px"
+              display: "flex",
+              alignItems: "center",
+              gap: "4px"
+            }}>
+              <div style={{
+                width: "6px",
+                height: "6px",
+                background: "#4a7c59",
+                borderRadius: "50%"
+              }} />
+              Verified
+            </span>
+            <span style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "4px"
+            }}>
+              <div style={{
+                width: "6px",
+                height: "6px",
+                background: "#4a7c59",
+                borderRadius: "50%"
+              }} />
+              Protected
+            </span>
+          </div>
+        </div>
+
+        {/* Summary Boxes */}
+        <div style={{
+          display: "flex",
+          gap: "12px",
+          width: "100%",
+          maxWidth: "400px",
+          margin: "24px auto 0 auto"
+        }}>
+          {/* Total Cashback Earned Box */}
+          <div style={{
+            flex: "1",
+            padding: "16px",
+            backgroundColor: "#f5faf6",
+            borderRadius: "12px",
+            border: "2px solid #e0f0e3",
+            textAlign: "center",
+            boxShadow: "0 2px 8px rgba(74, 124, 89, 0.1)"
+          }}>
+            <div style={{
+              fontSize: "14px",
+              color: "#4a7c59",
+              fontWeight: "600",
+              marginBottom: "4px"
+            }}>
+              Total Cashback
+            </div>
+            <div style={{
+              fontSize: "20px",
+              fontWeight: "700",
+              color: "#2d5233"
             }}>
               RM2,000
-            </span>
+            </div>
+          </div>
+
+          {/* Total Donation Box */}
+          <div style={{
+            flex: "1",
+            padding: "16px",
+            backgroundColor: "#f5faf6",
+            borderRadius: "12px",
+            border: "2px solid #e0f0e3",
+            textAlign: "center",
+            boxShadow: "0 2px 8px rgba(74, 124, 89, 0.1)"
+          }}>
+            <div style={{
+              fontSize: "14px",
+              color: "#4a7c59",
+              fontWeight: "600",
+              marginBottom: "4px"
+            }}>
+              Total Donation
+            </div>
+            <div style={{
+              fontSize: "20px",
+              fontWeight: "700",
+              color: "#2d5233"
+            }}>
+              RM500
+            </div>
           </div>
         </div>
 
