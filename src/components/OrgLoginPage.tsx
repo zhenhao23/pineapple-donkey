@@ -4,7 +4,7 @@ import jataNegara from "../assets/login/jata-negara.webp";
 import mydigitalid from "../assets/login/mydigitalid.svg";
 import "./LoginPage.css";
 
-const LoginPage: React.FC = () => {
+const OrgLoginPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
@@ -29,8 +29,12 @@ const LoginPage: React.FC = () => {
       <button className="mydigitalid-btn" onClick={handleLogin}>
         <span>Login with MyDigitalID</span>
       </button>
+      Or
+      <a href="/org-register" className="pic-register-btn">
+        <span>Register your organization</span>
+      </a>
     </div>
   );
 };
 
-export default LoginPage;
+export default OrgLoginPage;

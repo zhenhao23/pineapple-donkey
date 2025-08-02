@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ownerIcon from "../assets/login/owner.png";
 import userIcon from "../assets/login/user.png";
 import { useUser } from "../context/UserContext"; // Import the context
+import "./OrgRegisterPage.css"; // Assuming you have a CSS file for styling
 import "./RoleSelectionPage.css";
 
 const RoleSelectionPage: React.FC = () => {
@@ -19,7 +20,13 @@ const RoleSelectionPage: React.FC = () => {
       // Update role in context (which also updates sessionStorage)
       setRole(selectedRole as "owner" | "user");
       // Navigate to login page
-      navigate("/login");
+      if (selectedRole === "owner") {
+        navigate("/org-login");
+      }
+      else {
+        // For user role, navigate to login page
+        navigate("/login");
+      }
     }
   };
 
