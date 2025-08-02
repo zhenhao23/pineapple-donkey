@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 import "./TurtleTimelinePage.css";
 
 import nestSite from "../assets/timeline/nest-site.png";
@@ -49,6 +50,17 @@ const PROGRESS = (CURRENT / TARGET) * 100;
 
 const TurtleTimelinePage: React.FC = () => {
   const navigate = useNavigate();
+  const { role } = useUser(); // Get the user role from context
+
+  const isOwner = role === "owner";
+
+  // Define URLs based on role
+  const actionUrl = isOwner
+    ? "https://smart-contract-green.vercel.app/program-tracker?Program=Save%20the%20Sea%20Turtles&Organization=World%20Wide%20Fund%20for%20Nature&uuid=231321312"
+    : "https://smart-contract-green.vercel.app/payment?username=Don%20Don%20Donkey&Program=Save%20the%20Sea%20Turtles&Organization=World%20Wide%20Fund%20for%20Nature&mobile=60327810500&tin=IG56003500070&uuid=231321323";
+
+  // Define button text based on role
+  const actionButtonText = isOwner ? "Submit" : "Donate";
 
   return (
     <div className="turtle-timeline-page">
@@ -59,39 +71,19 @@ const TurtleTimelinePage: React.FC = () => {
       >
         ← Back
       </button>
-      <button
-        onClick={() => navigate("/turtle-timeline2")}
-        style={{
-          position: "absolute",
-          top: "24px",
-          right: "24px",
-          background: "#fff",
-          color: "#08745c",
-          border: "2px solid #b2dfdb",
-          borderRadius: "24px",
-          padding: "8px 20px",
-          fontSize: "1rem",
-          fontWeight: "600",
-          cursor: "pointer",
-          boxShadow: "0 2px 8px rgba(8, 116, 92, 0.08)",
-          transition: "background 0.2s, color 0.2s, border 0.2s",
-          zIndex: "10"
-        }}
-      >
-        Switch
-      </button>
+
       <h1 className="turtle-main-title">WWF Save Sea Turtles</h1>
-      <a 
-        href="https://smart-contract-green.vercel.app/payment?username=Don%20Don%20Donkey&Program=Save%20the%20Sea%20Turtles&Organization=World%20Wide%20Fund%20for%20Nature&mobile=60327810500&tin=IG56003500070&uuid=231321323"
+      <a
+        href={actionUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="turtle-donate-btn"
         style={{
           textDecoration: "none",
-          display: "inline-block"
+          display: "inline-block",
         }}
       >
-        Donate
+        {actionButtonText}
       </a>
       <div className="turtle-progress-bar-wrap">
         <div className="turtle-progress-bar-bg">

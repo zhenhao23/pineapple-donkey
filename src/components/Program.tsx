@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext"; // Import the user context
 
 // Social project images
 import floodReliefImg from "../assets/social-projects/flood-relief.png";
@@ -54,6 +55,7 @@ const photoUrls = [
 const Program: React.FC = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const navigate = useNavigate();
+  const { role } = useUser(); // Get the user role from context
 
   const handleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -67,6 +69,12 @@ const Program: React.FC = () => {
     }
   };
 
+  // Filter programs based on user role
+  const displayedPrograms =
+    role === "owner"
+      ? photoUrls.slice(0, 1) // Only show the first program (WWF Conservation) for owners
+      : photoUrls; // Show all programs for users
+
   return (
     <div style={{ padding: "80px 24px 24px 24px", position: "relative" }}>
       {/* Back Button (UI refer to timeline) */}
@@ -79,8 +87,9 @@ const Program: React.FC = () => {
         ← Back
       </button>
       <h1 style={{ textAlign: "center", marginBottom: "24px" }}>
-        All Programs
+        {role === "owner" ? "My Program" : "All Programs"}
       </h1>
+
       <div
         style={{
           display: "flex",
@@ -89,7 +98,7 @@ const Program: React.FC = () => {
           marginTop: "24px",
         }}
       >
-        {photoUrls.map((photo, index) => {
+        {displayedPrograms.map((photo, index) => {
           const isExpanded = expandedIndex === index;
           const isWWF = photo.name === "WWF Conservation";
 
@@ -208,7 +217,7 @@ const Program: React.FC = () => {
                           cursor: "pointer",
                         }}
                       >
-                        Donate
+                        {role === "owner" ? "View Details" : "Donate"}
                       </button>
                     </div>
                   </>
@@ -218,26 +227,6 @@ const Program: React.FC = () => {
           );
         })}
       </div>
-
-      {/* ⬇️ Back to Home Button */}
-      {/* <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}
-      >
-        <button
-          onClick={() => navigate("/")}
-          style={{
-            backgroundColor: "#00b894",
-            color: "white",
-            padding: "10px 20px",
-            borderRadius: "8px",
-            border: "none",
-            cursor: "pointer",
-            fontWeight: 600,
-          }}
-        >
-          Back to Home
-        </button>
-      </div> */}
     </div>
   );
 };

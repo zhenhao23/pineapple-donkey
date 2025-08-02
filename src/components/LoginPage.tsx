@@ -9,7 +9,7 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = () => {
     // Simulate login, then redirect to homepage
-    navigate("/");
+    navigate("/home");
   };
 
   return (
